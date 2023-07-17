@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource("/users", UserController::class);
 Route::get('/transactions',[TransactionController::class,'index']);
+Route::get('/transactions/{receiver_phone}',[TransactionController::class,'getReceiver']);
 Route::post('/transactions',[TransactionController::class,'store']);

@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Resources\UserRessource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\TransactionRessource;
 
@@ -102,7 +101,7 @@ class TransactionController extends Controller
             $receiver = User::where('phone', $phoneReceiver)->first();
 
             if (!$receiver) {
-                throw new Exception("l'utilisateur n'existe pas");
+                throw new \Exception("l'utilisateur n'existe pas");
             }
 
             $sender->update(['balance' => $sender->balance - $amount]);
@@ -118,5 +117,11 @@ class TransactionController extends Controller
             DB::rollBack();
             dd($exception);
         }
+    }
+
+    public function getReceiver($receiverPhone)
+    {
+        /** @var User $user */
+        return  User::where('phone', 'like', "%$receiverPhone%")->get();
     }
 }
